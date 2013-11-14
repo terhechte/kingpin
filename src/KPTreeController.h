@@ -30,7 +30,6 @@
 @property (nonatomic) CGSize annotationSize;
 @property (nonatomic) CGPoint annotationCenterOffset;
 @property (nonatomic) CGFloat animationDuration;
-@property (nonatomic) UIViewAnimationOptions animationOptions;
 @property (nonatomic) BOOL clusteringEnabled;
 @property (nonatomic) BOOL debuggingEnabled;
 

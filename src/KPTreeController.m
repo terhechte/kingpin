@@ -268,23 +268,20 @@
         }
     };
     
-    void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
+    void (^completionBlock)() = ^() {
 
         completionDelegate();
         
         if (completion) {
-            completion(finished);
+            completion(YES);
         }
     };
     
-    [UIView animateWithDuration:self.animationDuration
-                          delay:0.f
-                        options:self.animationOptions
-                     animations:^{
-                         cluster.coordinate = toCoord;
-                     }
-                     completion:completionBlock];
-    
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:self.animationDuration];
+    [CATransaction setCompletionBlock:completionBlock];
+    cluster.coordinate = toCoord;
+    [CATransaction commit];
 }
 
 // a modified single-linkage cluster algorithm to merge any annotations that visually overlap
@@ -313,17 +310,17 @@
                 // if the two views overlap, merge them
                 
                 if (!c1._annotationPointInMapView) {
-                    c1._annotationPointInMapView = [NSValue valueWithCGPoint:[self.mapView convertCoordinate:c1.coordinate
+                    c1._annotationPointInMapView = [NSValue valueWithPoint:[self.mapView convertCoordinate:c1.coordinate
                                                                                                toPointToView:self.mapView]];
                 }
                 
                 if (!c2._annotationPointInMapView) {
-                    c2._annotationPointInMapView = [NSValue valueWithCGPoint:[self.mapView convertCoordinate:c2.coordinate
+                    c2._annotationPointInMapView = [NSValue valueWithPoint:[self.mapView convertCoordinate:c2.coordinate
                                                                                                toPointToView:self.mapView]];
                 }
                 
-                CGPoint p1 = [c1._annotationPointInMapView CGPointValue];
-                CGPoint p2 = [c2._annotationPointInMapView CGPointValue];
+                CGPoint p1 = [c1._annotationPointInMapView pointValue];
+                CGPoint p2 = [c2._annotationPointInMapView pointValue];
                 
                 CGRect r1 = CGRectMake(p1.x - self.annotationSize.width + self.annotationCenterOffset.x,
                                        p1.y - self.annotationSize.height + self.annotationCenterOffset.y,

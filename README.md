@@ -1,8 +1,10 @@
 kingpin
 =======
 
-### A drop-in MKAnnotation clustering library for iOS
+### A drop-in MKAnnotation clustering library for Mac OS X 
 
+This is a lightweight fork of kingpin for iOS to use it with the new
+10.9 Mavericks MapKit on Mac OS X
 
 features
 ---------
